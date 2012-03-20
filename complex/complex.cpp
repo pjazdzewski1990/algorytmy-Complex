@@ -11,36 +11,46 @@ using namespace std;
 
 int main()
 {
-	float a,b;
+	double a,b;
 	char command;
-	Complex<float> res(1.0, 1.0);
-
+	Complex<double> res(1.0, 1.0);
 	while(true){
+		cout << "Podaj liczbe (re im) ";
 		cin >> a >> b;
-		Complex<float> c1(a, b);
+		Complex<double> c1(a, b);
 		cout << c1.toString() <<endl;
 
+		cout << "Podaj liczbe (re im) ";
 		cin >> a >> b;
-		Complex<float> c2(a, b);
+		Complex<double> c2(a, b);
 		cout << c2.toString() <<endl;
 
-		cout << "Podaj znak operacji" <<endl;
+		cout << "Podaj znak operacji: + - * / ^(dodatnia potega) &(pierwiastkowanie)" <<endl;
 		cin >> command;
+
 		switch(command){
 			case '+':
-				res = c1 + c2;
+				res = c1.add(c2);
 				cout << res.toString() << " " << res.toTrigonometric() << endl;
 				break;
 			case '-':
-				res = c1 - c2;
+				res = c1.substract(c2);
 				cout << res.toString() << " " << res.toTrigonometric() << endl;
 				break;
 			case '*':
-				res = c1 * c2;
+				res = c1.multiply(c2);
+				cout << res.toString() << " " << res.toTrigonometric() << endl;
+				break;
+			case '/':
+				res = c1.divide(c2);
 				cout << res.toString() << " " << res.toTrigonometric() << endl;
 				break;
 			case '^':
-				res = c1.power(c2);
+				res = c1.power((float)a);
+				cout << res.toString() << " " << res.toTrigonometric() << endl;
+				break;
+			case '&':
+				//Complex<double> *roots = c1.root(a);
 				cout << res.toString() << " " << res.toTrigonometric() << endl;
 				break;
 			default:

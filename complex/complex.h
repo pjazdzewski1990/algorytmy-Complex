@@ -14,6 +14,81 @@ template <class TYP> class Complex {
 		TYP im;
 
 	public:
+		//potêga: ujemna lub dodatnia, 
+		// tylko liczby ca³kowite 
+		Complex<TYP> power(unsigned times){
+			if(times == 0){
+				return *this;
+			}else{
+				//procedura podnoszenia do potegi przez wielokrotne mno¿enie 
+				if(times > 0){
+					Complex<TYP> res = Complex(re, im);
+					for(int i=1; i<times; i++){
+						res = *this * res;
+					}
+					return res;
+				}else{
+					//x^(-a) = (1/x)^a
+					Complex one = new Complex(1,0);	//1 + 0i
+					Complex cpl = one / *this;
+					return cpl.power(-times);
+				}
+			}
+		}
+
+		Complex<TYP> power(float times){
+			if(times == 0){
+				return *this;
+			}else{
+				//procedura podnoszenia do potegi przez wielokrotne mno¿enie 
+				if(times > 0){
+					Complex<TYP> res = Complex(re, im);
+					for(int i=1; i<times; i++){
+						res = *this * res;
+					}
+					return res;
+				}else{
+					//x^(-a) = (1/x)^a
+					Complex<TYP> one = Complex(1,0);	//1 + 0i
+					Complex<TYP> cpl = one / *this;
+					return cpl.power(-times);
+				}
+			}
+		}
+
+		Complex<TYP> operator+(Complex<TYP> second){
+			return this->add(second);
+		}
+
+		Complex<TYP> add(Complex<TYP> second){
+			return Complex(re + second.re, im + second.im);
+		}
+
+		Complex<TYP> operator-(Complex<TYP> second){
+			return (*this).substract(second);
+		}
+
+		Complex<TYP> substract(Complex<TYP> second){
+			return Complex(re - second.re, im - second.im);
+		}
+		
+		Complex<TYP> operator*(Complex<TYP> second){
+			return this->multiply(second);
+		}
+
+		Complex<TYP> multiply(Complex<TYP> second){
+			return Complex(re*second.re - im*second.im, im*second.re + re*second.im);
+		}
+
+		Complex<TYP> operator/(Complex<TYP> second){
+			return this->divide(second);
+		}
+
+		inline Complex<TYP> divide(Complex<TYP> second){
+			TYP div = second.re * second.re + second.im * second.im;
+			return Complex((re*second.re + im*second.im)/div, (im*second.re - re*second.re)/div);
+		}
+
 		Complex(TYP _re, TYP _im){
 			re= _re;
 			im =_im;
@@ -49,51 +124,9 @@ template <class TYP> class Complex {
 			return ss.str();
 		}
 
-		//potêga: ujemna lub dodatnia, 
-		// tylko liczby ca³kowite 
-		Complex<TYP> power(unsigned times){
-			if(times == 0){
-				return 1;
-			}else{
-				//procedura podnoszenia do potegi przez wielokrotne mno¿enie 
-				if(times > 0){
-					Complex<TYP> res = Complex(re, im);
-					for(int i=1; i<times; i++){
-						res = *this * res;
-					}
-					return res;
-				}else{
-					//x^(-a) = (1/x)^a
-					Complex one = new Complex(1,0);	//1 + 0i
-					Complex cpl = one / *this;
-					return cpl.power(-times);
-				}
-			}
-		}
-
-		Complex<TYP> power(float times){
-			if(times == 0){
-				return 1;
-			}else{
-				//procedura podnoszenia do potegi przez wielokrotne mno¿enie 
-				if(times > 0){
-					Complex<TYP> res = Complex(re, im);
-					for(int i=1; i<times; i++){
-						res = *this * res;
-					}
-					return res;
-				}else{
-					//x^(-a) = (1/x)^a
-					Complex one = new Complex(1,0);	//1 + 0i
-					Complex cpl = one / *this;
-					return cpl.power(-times);
-				}
-			}
-		}
-
 		//wzór de Moivre
-		Complex[] root(int n){
-			Complex* arr = new (nothrow) Complex[n];
+		Complex* root(int n){
+			Complex* arr = new Complex[n];
 			double z = sqrt(pow(re,2.0) + pow(im,2.0));
 			double _z = pow(abs(z), -i);
 
@@ -127,24 +160,6 @@ template <class TYP> class Complex {
 				return -M_PI/2;
 			}
 			throw exception("Nie mo¿na obliczyæ fi");
-		}
-
-		//OPERATORY
-		inline Complex<TYP> operator+(Complex<TYP> second){
-			return Complex(re + second.re, im + second.im);
-		}
-		
-		inline Complex<TYP> operator-(Complex<TYP> second){
-			return Complex(re - second.re, im - second.im);
-		}
-
-		inline Complex<TYP> operator*(Complex<TYP> second){
-			return Complex(re*second.re - im*second.im, im*second.re + re*second.im);
-		}
-
-		inline Complex<TYP> operator/(Complex<TYP> second){
-			float div = second.re * second.re + second.im * second.im;
-			return Complex((re*second.re + im*second.im)/div, (im*second.re - re*second.re)/div);
 		}
 };
  

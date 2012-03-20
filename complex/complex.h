@@ -128,7 +128,7 @@ template <class TYP> class Complex {
 		Complex* root(int n){
 			Complex* arr = new Complex[n];
 			double z = sqrt(pow(re,2.0) + pow(im,2.0));
-			double _z = pow(abs(z), -i);
+			double _z = pow(abs(z), -n);
 
 			for(int i=0; i<n; i++){	
 				double _re = cos((fi() + 2*i*M_PI)/n);
